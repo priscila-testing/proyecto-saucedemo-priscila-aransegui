@@ -1,3 +1,5 @@
+from selenium.webdriver.support.ui import WebDriverWait
+from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.common.by import By
 
 def test_add_to_cart(login_in_driver):
@@ -8,7 +10,7 @@ def test_add_to_cart(login_in_driver):
     add_product.click()
 
     # # Verificar que el contador del carrito se actualizó
-    cart_badge = driver.find_element(By.CLASS_NAME, "shopping_cart_badge")
+    cart_badge = WebDriverWait(driver, 10).until(EC.visibility_of_element_located((By.CLASS_NAME, "shopping_cart_badge")))
     assert cart_badge.text == "1", "El contador del carrito no se incrementó"
 
     # # Navegar al carrito de compras
