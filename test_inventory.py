@@ -12,8 +12,8 @@ def test_inventory(login_in_driver):
 
     # # Verificar nombre y precio del primer producto
     first_product = products[0]
-    name = first_product.find_element(By.CLASS_NAME, "inventory_details_name").text
-    price = first_product.find_element(By.CLASS_NAME, "inventory_details_price").text
+    name = first_product.find_element(By.CLASS_NAME, "inventory_item_name").text
+    price = first_product.find_element(By.CLASS_NAME, "inventory_item_price").text
 
     assert name == "Sauce Labs Backpack", "No se mostró el nombre 'Sauce Labs Backpack'"
     assert price == "$29.99", "No se mostró el precio '$29.99'"
@@ -23,4 +23,4 @@ def test_inventory(login_in_driver):
     filters = driver.find_element(By.CLASS_NAME, "product_sort_container")
 
     assert menu.is_displayed(), "No se muestra el menú"
-    assert filter.is_displayed(), "No se muestran los filtros"
+    assert filters.is_displayed(), "No se muestran los filtros"
