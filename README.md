@@ -5,6 +5,8 @@ Introducción:
 En este proyecto estudié y practiqué la automatización de pruebas funcionales sobre la página SauceDemo, una tienda de demostración diseñada para ejercicios de testing.
 El objetivo principal fue aprender a crear pruebas automáticas usando Python, Selenium y Pytest, verificando desde el login hasta el carrito de compras. Además, utilicé Git para versionar el código y GitHub para almacenar el proyecto como parte de mi portafolio, mostrando de manera profesional los avances y cambios realizados durante el estudio.
 Dividí la explicación del proyecto en seis partes principales, que se detallan a continuación en el cuerpo del documento.
+
+
 I.	Primero, creé un archivo llamado utils.py en la raíz del proyecto.
 Ese archivo sirve para guardar funciones que voy a usar varias veces.
 Creé una función llamada login con un parámetro driver. Ese parámetro es el WebDriver de Selenium, que controla el navegador que me entrega Pytest.
@@ -14,6 +16,7 @@ Agregué un timer para hacer una pausa corta en el test de la página (ver comen
 En utils.py, además importé:
 from selenium.webdriver.common.by import By para decir a Selenium cómo buscar los elementos en la página.
 import time lo usé para hacer pausas pequeñas mientras Selenium espera que la página cargue los elementos (con time.sleep()). 
+
 
 II.	Segundo, creé un archivo llamado conftest.py en la raíz del proyecto.
 En ese archivo se definen configuraciones y fixtures que se van a compartir entre varios archivos de test.
@@ -30,7 +33,9 @@ Con el return pasé al test el navegador preparado, listo para interactuar con l
 En conftest.py importé:
 import pytest para crear y manejar los tests y los fixtures
 from selenium import webdriver para abrir y controlar el navegador que vamos a usar en los tests
-from utils import login para poder usar la función de login dentro de los fixtures
+from utils import login para poder usar la función de login dentro de los fixtures.
+
+
 III.	En tercero lugar, creé un archivo llamado test_login.py en la raíz del proyecto.
 En ese archivo valido el login exitoso usando espera explícita, verificando que la URL después del login sea correcta y que el texto “Products” esté visible en la página.
 Creé una función llamada test_login_success y le pasé como parámetro la fixture login_in_drive de conftest.py, para hacer login en la página, porque esa fixture devuelve el navegador Chrome ya abierto y logueado.
@@ -42,6 +47,7 @@ Pare que sea posible hacer estos tests, en test_login.py importé:
 from selenium.webdriver.common.by import By otra vez.
 from selenium.webdriver.support.ui import WebDriverWait para esperar un tiempo determinado hasta que un elemento esté presente o cumpla cierta condición, evitando errores si la página tarda en cargar.
 from selenium.webdriver.support import expected_conditions as EC para traer condición predefinida “elemento visible” que usé junto a WebDriverWait.
+
 
 IV.	En cuarto lugar, creé un archivo llamado test_inventory.py en la raíz del proyecto.
 En ese archivo verifico que el título de la página de inventario sea correcto, que haya productos visibles, compruebo nombre y precio del primer producto, y valido que los elementos importantes de la interfaz, menú y filtros, estén presentes.
@@ -61,7 +67,6 @@ from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 
 
-
 V.	En quinto lugar, creé un archivo llamado test_cart.py en la raíz del proyecto.
 En ese archivo agrego un producto al carrito, verifico que el contador del carrito se incremente, navego al carrito de compras y compruebo que el producto aparezca correctamente.
 Creé una función llamada test_add_to_cart que recibe como parámetro la fixture login_in_drive de conftest.py, para trabajar con un navegador ya logueado.
@@ -75,6 +80,7 @@ from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.common.by import By
 
+
 VI.	En sexto lugar, creé un archivo llamado run_tests.py en la raíz del proyecto.
 En ese archivo defino la lista de archivos de prueba que se ejecutarán, con el objetivo de centralizar la ejecución de todas las pruebas desde un único archivo, evitando la necesidad de ejecutarlas desde los otros archivos de prueba.
 Para ello, creé una carpeta nueva llamada tests dentro de la carpeta del proyecto (proyecto-saucedemo-priscila-aransegui) y moví allí los tres archivos de test.
@@ -85,6 +91,7 @@ Al final, llamé a pytest.main pasando cómo parámetro la variable pytest_args;
 Así puedo correr todos los tests de forma centralizada desde run_tests.py y obtener automáticamente el reporte sin tener que ejecutar cada test individualmente.
 En run_tests.py importé:
 import pytest
+
 
 Conclusión
 Este proyecto me permitió practicar y consolidar conocimientos en automatización de pruebas, desde la interacción con elementos web hasta la organización de tests y generación de reportes. Además, la integración de Git y GitHub permitió versionar y almacenar el proyecto como parte de mi portafolio, mostrando de forma clara mi progreso y habilidades en testing automatizado. SauceDemo sirvió como entorno seguro para experimentar sin afectar aplicaciones reales.
