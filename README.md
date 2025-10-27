@@ -93,5 +93,5 @@ En run_tests.py importé:
 import pytest
 
 
-Conclusión
+Conclusión:
 Este proyecto me permitió practicar y consolidar conocimientos en automatización de pruebas, desde la interacción con elementos web hasta la organización de tests y generación de reportes. Además, la integración de Git y GitHub permitió versionar y almacenar el proyecto como parte de mi portafolio, mostrando de forma clara mi progreso y habilidades en testing automatizado. SauceDemo sirvió como entorno seguro para experimentar sin afectar aplicaciones reales.
