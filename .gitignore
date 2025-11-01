@@ -1,3 +1,9 @@
+# Ignorar caches de Python
 __pycache__/
+tests/__pycache__/
 *.pyc
+*.pyo
+*.pyd
+
+# Ignorar reportes de tests
 report.html
