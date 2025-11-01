@@ -23,3 +23,5 @@ def test_cart(login_in_driver):
     cart_product_title = driver.find_element(By.CSS_SELECTOR, ".cart_item .inventory_item_name").text
     # Comprobar que el nombre coincide
     assert title_product == cart_product_title, "El producto no coincide"
+
+    
