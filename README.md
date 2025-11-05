@@ -16,6 +16,7 @@ El objetivo principal fue aprender a crear pruebas automáticas usando Python, S
 •	Validaciones funcionales de login, inventario y carrito.
 •	Uso de esperas explícitas (WebDriverWait + expected_conditions) para hacer los tests más confiables.
 •	Estructura organizada para facilitar mantenimiento y escalabilidad.
+•	Generación automática de reportes en formato HTML (pytest-html).
 
 
 ⚙️ Requisitos prévios
@@ -46,7 +47,7 @@ Dividí la explicación del proyecto en seis partes principales, que se detallan
 
 •	Define fixtures compartidas entre tests:
 •	browser_driver: crea y devuelve un navegador Chrome. Decorada con @pytest.fixture(scope="session") para abrir el navegador solo una vez por sesión.
-•	login_in_driver: llama a browser_driver y ejecuta login(driver), devolviendo un navegador ya logueado.
+•	login_in_driver: llama a browser_driver y ejecuta login(driver), devolviendo un navegador ya logueado. Decorada con @pytest.fixture(scope="session").
 •	Librerías importadas: pytest, webdriver, login de utils.
 
 

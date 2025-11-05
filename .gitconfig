@@ -1,0 +1,3 @@
+[alias]
+    current = rev-parse --abbrev-ref HEAD
+    where = !echo "You are on branch: $(git rev-parse --abbrev-ref HEAD)"

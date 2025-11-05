@@ -1,7 +1,9 @@
 from selenium.webdriver.common.by import By
+from selenium.webdriver.support.ui import WebDriverWait
+from selenium.webdriver.support import expected_conditions as EC
 import time
 
-def login(driver):
+def login(driver, timeout=15):
     # # Navegar a la página de login
     driver.get("https://www.saucedemo.com/") 
 
@@ -13,4 +15,10 @@ def login(driver):
     
     # # Click en login
     driver.find_element(By.ID, "login-button").click()
-    time.sleep(2)  # (Opcional, pausa corta)
+    
+    # ESPERA EXPLÍCITA: que aparezcan los productos
+    WebDriverWait(driver, timeout).until(
+        EC.presence_of_all_elements_located((By.CSS_SELECTOR, ".inventory_item"))
+    )
+
+    time.sleep(1)

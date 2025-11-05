@@ -1,6 +1,7 @@
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
+import time
 
 def test_inventory(login_in_driver):
     driver = login_in_driver
@@ -9,7 +10,9 @@ def test_inventory(login_in_driver):
     assert driver.title == "Swag Labs"     
 
     # # Verificar que haya productos visibles
-    products = WebDriverWait(driver, 10).until(EC.presence_of_all_elements_located((By.CLASS_NAME, "inventory_item")))
+    products = WebDriverWait(driver, 10).until(
+        EC.presence_of_all_elements_located((By.CSS_SELECTOR, ".inventory_item"))
+        )
     assert len(products) > 0, "No hay productos en la lista"
 
     # # Verificar nombre y precio del primer producto
@@ -26,3 +29,5 @@ def test_inventory(login_in_driver):
 
     assert menu.is_displayed(), "No se muestra el menú"
     assert filters.is_displayed(), "No se muestran los filtros"
+
+    time.sleep(2)
