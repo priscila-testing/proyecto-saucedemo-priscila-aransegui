@@ -2,17 +2,19 @@ import pytest
 from pages.login_page import LoginPage
 from pages.cart_page import CartPage
 from utils.datos import leer_csv_login
+from utils.lector_json import leer_jason_productos
 import time
 
+RUTA_JASON = "datos/productos.json"
 
 @pytest.mark.parametrize("usuario,password,debe_funcionar", leer_csv_login())
-def test_carrito(login_in_driver, usuario, password, debe_funcionar):
+@pytest.mark.parametrize("nombre_producto", leer_jason_productos(RUTA_JASON))
+def test_carrito_json(login_in_driver, usuario, password, debe_funcionar, nombre_producto):
     if not debe_funcionar:
-        return  # Ignora usuarios que no deberían loguear
+        return
 
     driver = login_in_driver
 
-    # Login
     login_page = LoginPage(driver)
     login_page.login_completo(usuario, password)
 

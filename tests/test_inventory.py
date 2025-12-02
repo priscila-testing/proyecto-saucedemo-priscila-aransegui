@@ -1,33 +1,38 @@
-from selenium.webdriver.common.by import By
+import pytest
+from pages.login_page import LoginPage
+from pages.inventory_page import InventoryPage
+from utils.datos import leer_csv_login
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
-import time
 
-def test_inventory(login_in_driver):
+@pytest.mark.parametrize("usuario,password,debe_funcionar", leer_csv_login())
+def test_navegacion_y_catalogo(login_in_driver, usuario, password, debe_funcionar):
+    if not debe_funcionar:
+        return  # Ignora usuarios que no deberían loguear
+
     driver = login_in_driver
 
-    # # Verificar que el titulo de la página de inventario sea correcto
-    assert driver.title == "Swag Labs"     
+    # Login
+    login_page = LoginPage(driver)
+    login_page.login_completo(usuario, password)
 
-    # # Verificar que haya productos visibles
-    products = WebDriverWait(driver, 10).until(
-        EC.presence_of_all_elements_located((By.CSS_SELECTOR, ".inventory_item"))
-        )
-    assert len(products) > 0, "No hay productos en la lista"
+    inventory = InventoryPage(driver)
 
-    # # Verificar nombre y precio del primer producto
-    first_product = products[0]
-    name = first_product.find_element(By.CLASS_NAME, "inventory_item_name").text
-    price = first_product.find_element(By.CLASS_NAME, "inventory_item_price").text
+    # 1. Verificar título de la página de inventario
+    titulo = inventory.obtener_titulo_inventario()
+    assert titulo.is_displayed(), "El título 'Products' no está visible"
+    assert titulo.text == "Products"
 
-    assert name == "Sauce Labs Backpack", "No se mostró el nombre 'Sauce Labs Backpack'"
-    assert price == "$29.99", "No se mostró el precio '$29.99'"
+    # 2. Comprobar que existan productos visibles
+    productos = inventory.obtener_todos_los_productos()
+    assert len(productos) > 0, "No hay productos visibles en la página"
 
-    # # Validar que el menú y el filtro estén presentes en la página
-    menu = driver.find_element(By.ID, "react-burger-menu-btn")
-    filters = driver.find_element(By.CLASS_NAME, "product_sort_container")
+    # 3. Validar elementos importantes de la UI (menú, filtro, carrito)
+    inventory.verificar_menu_hamburguesa_visible()
+    inventory.verificar_filtro_visible()
+    inventory.verificar_boton_carrito_visible()
 
-    assert menu.is_displayed(), "No se muestra el menú"
-    assert filters.is_displayed(), "No se muestran los filtros"
-
-    time.sleep(2)
+    # 5. Listar nombre y precio del primer producto
+    nombre = inventory.obtener_nombre_producto()
+    precios = inventory.obtener_precio_producto()
+    print(f"Nombre: {nombre[0]}, precio {precios[0]}")

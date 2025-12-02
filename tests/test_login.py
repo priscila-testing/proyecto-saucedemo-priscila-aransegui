@@ -1,17 +1,30 @@
-from selenium.webdriver.common.by import By
-from selenium.webdriver.support.ui import WebDriverWait
-from selenium.webdriver.support import expected_conditions as EC
+import pytest
+from pages.login_page import LoginPage
+from utils.datos import leer_csv_login
+import time
 
-def test_login_success(login_in_driver):
+@pytest.mark.parametrize("usuario,password,debe_funcionar", leer_csv_login())
+def test_login_validation(login_in_driver, usuario, password, debe_funcionar):
     driver = login_in_driver
+    login = LoginPage(driver)
 
-    # # Validar login exitoso con espera explícita
-    WebDriverWait(driver, 10).until(
-        EC.presence_of_all_elements_located((By.CLASS_NAME, "inventory_list"))
-        )  
+    # 1. Navegar a la pagina de login
+    login.abrir_pagina()       
 
-    # # Validación URL
-    assert "/inventory.html" in driver.current_url, "No se redirigió al inventario"
+    # 2. Ingresar usuario y contraseña desde CSV             
+    login.login_completo(usuario, password) 
 
-    # # Validación texto Products
-    assert driver.find_element(By.CLASS_NAME, "title").text == "Products", "No se mostró el título 'Products'"
+    if debe_funcionar:
+        # 3. Validar login exitoso y verificar que se redirigió a la pagina de inventario
+        assert "/inventory.html" in driver.current_url
+        time.sleep(3)
+
+        # 4. Verificar que el logo "Swag Labs" sea visible
+        logo = login.obtener_logo_pagina()
+        assert logo.is_displayed(), "El logo 'Swag Labs' no está visible"
+        time.sleep(3)
+
+    else:
+        # Validar login fallido
+        mensaje_error = login.obtener_error()
+        assert mensaje_error != "", "No se mostró ningún mensaje de error"

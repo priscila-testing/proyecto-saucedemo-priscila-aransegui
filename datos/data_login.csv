@@ -1,0 +1,5 @@
+usuario,password,debe_funcionar
+standard_user,secret_sauce,True
+locked_out_user,secret_sauce,False
+adm,1234,False
+,secret_sauce,False
