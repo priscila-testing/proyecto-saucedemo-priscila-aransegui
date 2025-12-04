@@ -1,22 +1,26 @@
 import pytest
 from selenium import webdriver
-from selenium.webdriver.chrome.service import Service
-from webdriver_manager.chrome import ChromeDriverManager
 from pages.login_page import LoginPage
+from selenium.webdriver.chrome.options import Options
 
-import time
+@pytest.fixture(scope="function")
+def driver():
+    options = Options()
+    options.add_argument("--incognito")
 
-# # Inicializamos el navegador Chrome
-@pytest.fixture(scope="session")
-def browser_driver():
-    driver = webdriver.Chrome(service=Service(ChromeDriverManager().install()))
-    driver.maximize_window()
-    yield driver                   # Entrega el navegador al test para que lo use
-    driver.quit()                  # Cierra el navegador al final del test
+    driver = webdriver.Chrome(options=options)
+    yield driver
+    driver.quit()
 
-# # Login en la página web antes de cada test
-@pytest.fixture(scope="session")
-def login_in_driver(browser_driver):
-    LoginPage(browser_driver).abrir_pagina()
-    time.sleep(2)
-    return browser_driver          # Devuelve el navegador abierto y logueado
+@pytest.fixture
+def login_in_driver(driver,usuario,password):
+    LoginPage(driver).abrir_pagina().login_completo(usuario,password)
+    return driver
+
+@pytest.fixture
+def url_base():
+    return "https://reqres.in/api/users"
+
+@pytest.fixture
+def header_request():
+    return {"x-api-key": "reqres-free-v1"}

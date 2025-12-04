@@ -1,22 +1,16 @@
 import pytest
-from pages.login_page import LoginPage
 from pages.cart_page import CartPage
-from utils.datos import leer_csv_login
 import time
 
-
-@pytest.mark.parametrize("usuario,password,debe_funcionar", leer_csv_login())
-def test_carrito(login_in_driver, usuario, password, debe_funcionar):
-    if not debe_funcionar:
-        return  # Ignora usuarios que no deberían loguear
+@pytest.mark.parametrize("usuario,password",[("standard_user","secret_sauce")])
+def test_cart(login_in_driver,usuario,password):
 
     driver = login_in_driver
-
-    # Login
-    login_page = LoginPage(driver)
-    login_page.login_completo(usuario, password)
-
     cart = CartPage(driver)
+
+    # Verificar que el carrito está vacío al início
+    assert cart.verificar_carrito_esta_vacio() == 0
+    time.sleep(1)
 
     # Obtener nombre real del producto que voy a agregar
     nombre_esperado = cart.obtener_nombre_producto(0)
