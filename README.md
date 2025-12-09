@@ -7,7 +7,7 @@ Repositorio GitHub: https://github.com/priscila-testing/proyecto-saucedemo-prisc
 Introducción
 
 En este proyecto estudié y practiqué la automatización de pruebas funcionales sobre la página SauceDemo, una tienda de demostración diseñada para ejercicios de testing.
-El objetivo principal fue aprender a crear pruebas automáticas usando Python, Selenium y Pytest, verificando desde el login hasta el carrito de compras. Además, utilicé Git para versionar el código y GitHub para almacenar el proyecto como parte de mi portafolio, mostrando de manera profesional los avances y cambios realizados durante el estudio.
+El objetivo principal fue aprender a crear pruebas automáticas usando Python, Selenium y Pytest, verificando desde el login hasta el carrito de compras. Además, utilicé Git para versionar el código y GitHub para almacenar el proyecto como parte de mi portafolio.
 
 📘 El proyecto incluye
 
@@ -17,16 +17,19 @@ El objetivo principal fue aprender a crear pruebas automáticas usando Python, S
 •	Uso de esperas explícitas (WebDriverWait + expected_conditions) para hacer los tests más confiables.
 •	Estructura organizada para facilitar mantenimiento y escalabilidad.
 •	Generación automática de reportes en formato HTML (pytest-html).
+•   Uso de Faker para generar datos de prueba realistas en los tests (usernames, emails, direcciones, etc).
+•   Integración con APIs (ReqRes) para probar la creación, obtención, actualización y eliminación de datos en los tests.
 
 
 ⚙️ Requisitos prévios
 
-•	Python 3.10 o superior.
-•	Google Chrome instalado.
-•	Selenium.
-•	WebDriver (Chromedriver).
-•	Bibliotecas necesarias: pip install selenium pytest pytest-html
-•	Git y GitHub (para control de versiones y publicación del proyecto).
+•	Python 3.10 o superior
+•	Google Chrome
+•	Selenium
+•	WebDriver (Chromedriver)
+•	Bibliotecas necesarias: pip install selenium pytest pytest-html faker
+•	Git y GitHub
+•   APIs (ReqRes)
 
 
 Dividí la explicación del proyecto en seis partes principales, que se detallan a continuación en el cuerpo del documento.
